@@ -68,7 +68,7 @@ var lazySocialButtonsImagePath = '".LazySocialButtons_URL."';
 (function (loaded){
   var d = document,
   id = 'LazySocialButtonsScript',
-  src = '".LazySocialButtons_URL."lazySocialButtons.js';
+  src = '".LazySocialButtons_URL."lazySocialButtons.min.js';
   var js, st = d.getElementsByTagName('script')[0];
   if (d.getElementById(id)) { return; }
   js = d.createElement('script');
