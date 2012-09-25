@@ -82,6 +82,9 @@ DEALINGS IN THE SOFTWARE.
 
 == Changelog ==
 
+= Lazy-Social-Buttons v1.0.0 - 2012-09-24 =
+* New: Added .min.js for better performance.
+
 = Lazy-Social-Buttons v1.0.0 - 2012-09-23 =
 * Fixed: Nothing, initial release.
 * New: Everything, initial release.
