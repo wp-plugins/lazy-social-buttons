@@ -45,7 +45,7 @@ display with the spinning wait indicator.
 == Frequently Asked Questions ==
 
 If you have any questions, we'd love to hear from you. Please visit and leave
-your quetion here http://inside.godaddy.com/onhover-activated-social-buttons/
+your question here http://inside.godaddy.com/onhover-activated-social-buttons/
 
 = Is Lazy Social Buttons available outside of WordPress? =
 
