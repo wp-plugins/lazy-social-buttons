@@ -31,7 +31,7 @@ display with the spinning wait indicator.
 * Improves performance by delaying load of Social Buttons until onMouseOver
 * Choose position above or below content
 * Pick from google, twitter and facebook buttons
-* Picke whether to display facebook share or just like
+* Pick whether to display facebook share or just like
 * Have suggestions? Visit and leave comment at:
 * http://inside.godaddy.com/onhover-activated-social-buttons/
 
@@ -44,14 +44,13 @@ display with the spinning wait indicator.
 
 == Frequently Asked Questions ==
 
-If you have any questions, we'd love to hear from you.  Please visit and leave
+If you have any questions, we'd love to hear from you. Please visit and leave
 your quetion here http://inside.godaddy.com/onhover-activated-social-buttons/
 
 = Is Lazy Social Buttons available outside of WordPress? =
 
-Yes, please visit http://inside.godaddy.com/onhover-activated-social-buttons/ and
-https://github.com/godaddy/lazy-social-buttons/ for source code and instructions 
-for use.
+Yes, please visit http://inside.godaddy.com/onhover-activated-social-buttons/
+and https://github.com/godaddy/lazy-social-buttons/ for detail and source code.
 
 == Screenshots ==
 
@@ -82,7 +81,7 @@ DEALINGS IN THE SOFTWARE.
 
 == Changelog ==
 
-= Lazy-Social-Buttons v1.0.0 - 2012-09-24 =
+= Lazy-Social-Buttons v1.0.1 - 2012-09-24 =
 * New: Added .min.js for better performance.
 
 = Lazy-Social-Buttons v1.0.0 - 2012-09-23 =
