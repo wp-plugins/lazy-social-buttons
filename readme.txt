@@ -44,14 +44,14 @@ display with the spinning wait indicator.
 
 == Frequently Asked Questions ==
 
-If you have any questions, we'd love to hear from you.  Please visit and leave
-your quetion here http://inside.godaddy.com/onhover-activated-social-buttons/
+If you have any questions, we'd love to hear from you.  We'll very soon have
+an article live on http://inside.godaddy.com/ on this topic and you'll be able
+to leave comments and questions there.
 
 = Is Lazy Social Buttons available outside of WordPress? =
 
-Yes, please visit http://inside.godaddy.com/onhover-activated-social-buttons/ and
-https://github.com/godaddy/lazy-social-buttons/ for source code and instructions 
-for use.
+Yes, we'll soon have the source code published at 
+https://github.com/godaddy/lazy-social-buttons/ 
 
 == Screenshots ==
 
