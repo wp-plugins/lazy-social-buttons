@@ -52,6 +52,18 @@ your question here http://inside.godaddy.com/onhover-activated-social-buttons/
 Yes, please visit http://inside.godaddy.com/onhover-activated-social-buttons/
 and https://github.com/godaddy/lazy-social-buttons/ for detail and source code.
 
+= Why should or shouldn't I use the jquery CDN options? =
+
+Loading jquery from Google's CDN will boost performance because the likelihood
+of visitors already having it in browser cache is high.  It also puts this
+common JS file on a CDN closer to the end user, which means it'll download
+faster.
+
+The jquery CDN option is by default off, because it may cause problems with
+certain themes and other plugins that require a different version of jquery.
+I'd suggest that you turn this jquery CDN feature on and then test your site.
+If it breaks your site, turn it off.
+
 == Screenshots ==
 
 1. Social Buttons transition to real
@@ -80,6 +92,9 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 == Changelog ==
+
+= Lazy-Social-Buttons v1.0.3 - 2012-09-26 =
+* New: Google CDN loaded jquery now an option, default off
 
 = Lazy-Social-Buttons v1.0.2 - 2012-09-26 =
 * Fixed: Facebook share flyout option

@@ -3,7 +3,7 @@
 Plugin Name: Lazy Social Buttons
 Plugin URI: http://wordpress.org/extend/plugins/lazy-social-buttons/
 Description: Delayed loading of Google +1, Twitter and Facebook social buttons on your posts. Have your cake and eat it too; social buttons and performance.
-Version: 1.0.2
+Version: 1.0.3
 Author: Godaddy.com
 Author URI: http://www.godaddy.com/
 
@@ -48,9 +48,17 @@ if (!class_exists("LazySocialButtons")) {
 		}
 		function lazysocialbuttons_head()
 		{
-			wp_deregister_script('jquery');
-			wp_register_script('jquery', ($_SERVER['HTTPS'] ? 'https:' : 'http:').'//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js', false, false);
-			wp_enqueue_script('jquery', false, false, null); // null is supposed to remove the ver=3.4.2 but it doesn't
+			$jquerycdn = get_option('lazysocialbuttons_jquerycdn');
+			if ( $jquerycdn != "yes" )
+			{
+				wp_enqueue_script('jquery');
+			}
+			else
+			{
+				wp_deregister_script('jquery');
+				wp_register_script('jquery', ($_SERVER['HTTPS'] ? 'https:' : 'http:').'//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js', false, false);
+				wp_enqueue_script('jquery', false, false, null); // null is supposed to remove the ver=3.4.2 but it doesn't
+			}
 		}
 		function lazysocialbuttons_footer()
 		{
@@ -176,6 +184,13 @@ if (!class_exists("LazySocialButtons_Options")) {
 			    $page = 'discussion'
 			);
 			register_setting( $option_group = 'discussion', $option_name = 'lazysocialbuttons_facebook_share' );
+			add_settings_field(
+			    $id = 'lazysocialbuttons_jquerycdn',
+			    $title = "Lazy-Social-Buttons CDN jquery",
+			    $callback = array( &$this, 'lazysocialbuttons_jquerycdn' ),
+			    $page = 'discussion'
+			);
+			register_setting( $option_group = 'discussion', $option_name = 'lazysocialbuttons_jquerycdn' );
 		}
 		function lazysocialbuttons_position()
 		{
@@ -236,6 +251,18 @@ if (!class_exists("LazySocialButtons_Options")) {
 			      '.$options.'
 			      </select>
 			      Would you like the Facebook share flyout to appear? (requires: Facebook Button displayed)
+			      </label>';
+		}
+		function lazysocialbuttons_jquerycdn()
+		{
+			$jquerycdn = get_option('lazysocialbuttons_jquerycdn');
+			$options = '<option value="no"'.($jquerycdn!="yes" ? ' selected="selected"' : '').'>No</option>';
+			$options .= '<option value="yes"'.($jquerycdn=="yes" ? ' selected="selected"' : '').'>Yes</option>';
+			echo '<label for="lazysocialbuttons_jquerycdn">
+			      <select name="lazysocialbuttons_jquerycdn" id="lazysocialbuttons_jquerycdn">
+			      '.$options.'
+			      </select>
+			      Would you like to load jquery from Google\'s CDN? (May conflict with some themes and plugins)
 			      </label>';
 		}
 		function lazysocialbuttons_settings_link($links, $file) {
