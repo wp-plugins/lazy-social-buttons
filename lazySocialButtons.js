@@ -27,7 +27,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ============================================================================== 
 */
-
 (function ($)
 {
     // initialize each selected element
@@ -58,6 +57,7 @@ THE SOFTWARE.
                 shareUrl: ops.google.shareUrl ? ops.google.shareUrl : ops.shareUrl
             }
         });
+        ops.backgroundType = ops.backgroundType.toLowerCase() === 'dark' ? 'dark' : 'light';
         this.options = ops;
 
         this.baseClass = 'lazysocialbuttons';
@@ -78,6 +78,7 @@ THE SOFTWARE.
     proto.options = {
         shareUrl: null,
         imagePath: undefined,
+        backgroundType: 'light', // could be 'dark'
         containerFloat: 'left',
         buttons: { facebook: true, google: true, twitter: true },
         facebook: {
@@ -101,6 +102,7 @@ THE SOFTWARE.
         var el = this.element;
 
         if (el.attr('data-shareurl')) ops.shareUrl = el.attr('data-shareurl');
+        if (el.attr('data-backgroundtype')) ops.backgroundType = el.attr('data-backgroundtype').toLowerCase() === 'dark' ? 'dark' : 'light';
         if (el.attr('data-float')) ops.containerFloat = el.attr('data-float');
         if (el.attr('data-height')) ops.height = el.attr('data-height');
 
@@ -182,7 +184,7 @@ THE SOFTWARE.
         if (typeof (proto.imagePath) === 'undefined')
         {
             var src = $(document).find('script[id="LazySocialButtonsScript"]').attr('src').toLowerCase();
-            src = src.replace('lazysocialbuttons.js', '');
+            src = src.replace(/(lazysocialbuttons(\.min)?\.js)/gi, '');
             proto.imagePath = src;
         }
         return proto.imagePath;
@@ -274,7 +276,7 @@ THE SOFTWARE.
             var me = this[service];
             var scriptInDom = $('script#' + me.scriptId).length > 0;
             return (scriptInDom && me.testLoaded());
-        }
+        };
         // API details for Facebook
         this.facebook = {
             path: 'https://connect.facebook.net/en_US/all.js#xfbml=1',
@@ -309,7 +311,7 @@ THE SOFTWARE.
             scriptId: 'twitter-wjs',
             triggeredApiLoad: false,
             testLoaded: function () { return (typeof (twttr) !== 'undefined'); }
-        }
+        };
 
         // expose public methods
         return {
@@ -342,7 +344,7 @@ THE SOFTWARE.
                             position: 'relative',
                             display: 'inline-block',
                             'float': 'left',
-                            'background': 'transparent url(' + $m.getImagePath() + 'images/sf-share-strip-preload.png) no-repeat -195px 0'
+                            'background': 'transparent url(' + $m.getImagePath() + 'images/lsb-preload.png) no-repeat -195px 0'
                         })
                         .append(
                             $('<div />')
@@ -351,7 +353,7 @@ THE SOFTWARE.
                                 .attr('data-href', $m.options.facebook.shareUrl)
                                 .attr('data-send', 'false')
                                 .attr('data-show-faces', 'false')
-                                .attr('data-colorscheme', 'light')
+                                .attr('data-colorscheme', $m.options.backgroundType)
                                 .attr('data-sfid', $m.id)
                         );
                     if ($m.isIE(7)) el.css({ zoom: '1', display: 'inline' });
@@ -367,7 +369,7 @@ THE SOFTWARE.
                 {
                     var fbRootSel = '#lsbfbbox-' + $m.id;
                     var fbEl = $(fbRootSel);
-                    fbEl.css('background', 'transparent url(' + $m.getImagePath() + 'images/sf-spinner.gif) no-repeat 50% 50%');
+                    fbEl.css('background', 'transparent url(' + $m.getImagePath() + 'images/lsb-spinner-' + $m.options.backgroundType + '.gif) no-repeat 50% 50%');
                     FB.XFBML.parse(fbEl[0], function ()
                     {
                         var fbFrame = $(fbRootSel).find('iframe');
@@ -419,7 +421,7 @@ THE SOFTWARE.
                             marginRight: '10px',
                             display: 'inline-block',
                             'float': 'left',
-                            'background': 'transparent url(' + $m.getImagePath() + 'images/sf-share-strip-preload.png) no-repeat -84px 0'
+                            'background': 'transparent url(' + $m.getImagePath() + 'images/lsb-preload.png) no-repeat -84px 0'
                         })
                        .append(a);
                     //if ($m.isIE(7)) el.css({ zoom: '1', display: 'inline' });
@@ -432,7 +434,7 @@ THE SOFTWARE.
                 if (!$m.options.buttons.twitter) return;
 
                 var twboxSel = '#lsbtwbox-' + $m.id;
-                $(twboxSel).css('background', 'transparent url(' + $m.getImagePath() + 'images/sf-spinner.gif) no-repeat 50% 50%');
+                $(twboxSel).css('background', 'transparent url(' + $m.getImagePath() + 'images/lsb-spinner-' + $m.options.backgroundType + '.gif) no-repeat 50% 50%');
 
                 $m.twitterApi.ready(function ()
                 {
@@ -474,7 +476,7 @@ THE SOFTWARE.
                             display: 'inline-block',
                             marginRight: '10px',
                             'float': 'left',
-                            'background': 'transparent url(' + $m.getImagePath() + 'images/sf-share-strip-preload.png) no-repeat 0 0'
+                            'background': 'transparent url(' + $m.getImagePath() + 'images/lsb-preload.png) no-repeat 0 0'
                         });
                     // This is a workaround to get around an IE8 bug (version 8.0.7600.16385 only) 
                     // See  http://stackoverflow.com/questions/6877583/adding-a-google-1-button-after-page-load-in-ie-8 
@@ -494,7 +496,7 @@ THE SOFTWARE.
                 if (!$m.options.buttons.google) return;
 
                 var gpboxSel = '#lsbgpbox-' + $m.id;
-                $(gpboxSel).css('background', 'transparent url(' + $m.getImagePath() + 'images/sf-spinner.gif) no-repeat 50% 50%');
+                $(gpboxSel).css('background', 'transparent url(' + $m.getImagePath() + 'images/sf-spinner-' + $m.options.backgroundType + '.gif) no-repeat 50% 50%');
 
                 $m.googleApi.ready(function ()
                 {
@@ -530,10 +532,10 @@ THE SOFTWARE.
     {
         var b = this.builders;
 
+        b.facebook.configure(this.holder);
         b.google.configure(this.holder);
         b.twitter.configure(this.holder);
-        b.facebook.configure(this.holder);
-    }
+    };
 
     // load all content
     proto.content = function ()
@@ -543,7 +545,7 @@ THE SOFTWARE.
         b.google.content(this.holder);
         b.twitter.content(this.holder);
         b.facebook.content(this.holder);
-    }
+    };
 
     // kick off the plugin functionality
     proto.create = function ()
@@ -568,13 +570,11 @@ THE SOFTWARE.
         // the on demand part
         if (!(this.googleApi.isLoaded() && this.twitterApi.isLoaded() && this.facebookApi.isLoaded()))
         {
-            var $m = this;
             // bind the mouseover to load the APIs
             this.holder.bind('mouseover.lsb', function ()
             {
                 var shares = $('.lazysocialbuttons');
                 shares.unbind('mouseover.lsb');
-                var shareCount = shares.length;
 
                 // go ahead and fix any other instances on the page
                 // since there's no reason to hide them with the

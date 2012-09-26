@@ -3,7 +3,7 @@ Contributors: Godaddy
 Tags: social, social buttons, lazy social buttons, lazy load, +1, google, facebook, like, share, twitter, tweet
 Requires at least: 3.4
 Tested up to: 3.4
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: MIT
 License URI: http://opensource.org/licenses/mit-license.php
 
@@ -32,6 +32,7 @@ display with the spinning wait indicator.
 * Choose position above or below content
 * Pick from google, twitter and facebook buttons
 * Pick whether to display facebook share or just like
+* Optionally use Google CDN for load of jquery
 * Have suggestions? Visit and leave comment at:
 * http://inside.godaddy.com/onhover-activated-social-buttons/
 
@@ -64,6 +65,12 @@ certain themes and other plugins that require a different version of jquery.
 I'd suggest that you turn this jquery CDN feature on and then test your site.
 If it breaks your site, turn it off.
 
+= Why does the spinning animated gif look strange? =
+
+The animated gif was made to display on a white background.  If you are using
+a dark background, change the Lazy Social Buttons Background Type to dark in
+Settings/Discussion.
+
 == Screenshots ==
 
 1. Social Buttons transition to real
@@ -92,6 +99,9 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 == Changelog ==
+
+= Lazy-Social-Buttons v1.0.4 - 2012-09-26 =
+* New: Background Type choice to match the background of your site for the spinning animated gif
 
 = Lazy-Social-Buttons v1.0.3 - 2012-09-26 =
 * New: Google CDN loaded jquery now an option, default off

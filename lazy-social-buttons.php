@@ -104,8 +104,9 @@ var lazySocialButtonsImagePath = '".LazySocialButtons_URL."';
 			$id = $post->ID; //get post id
 			$postlink = get_permalink($id); //get post link
 			$title = trim($post->post_title); // get post title
+			$backgroundtype = get_option('lazysocialbuttons_backgroundtype');
 
-			$return_social = '<div class="lazysocialbuttons" data-float="left" data-buttons="'.implode(",", $buttons).'" data-twshareurl="'.$postlink.'" data-twtext="'.htmlspecialchars($title).'" data-shareurl="'.$postlink.'" data-fbhideflyout="'.($facebook_share ? "false" : "true").'"></div>';
+			$return_social = '<div class="lazysocialbuttons" data-float="left" data-buttons="'.implode(",", $buttons).'" data-twshareurl="'.$postlink.'" data-twtext="'.htmlspecialchars($title).'" data-shareurl="'.$postlink.'" data-fbhideflyout="'.($facebook_share ? "false" : "true").'" data-backgroundtype="'.($backgroundtype=="dark" ? "dark" : "light").'"></div>';
 
 			return $return_social;
 		}
@@ -191,6 +192,13 @@ if (!class_exists("LazySocialButtons_Options")) {
 			    $page = 'discussion'
 			);
 			register_setting( $option_group = 'discussion', $option_name = 'lazysocialbuttons_jquerycdn' );
+			add_settings_field(
+			    $id = 'lazysocialbuttons_backgroundtype',
+			    $title = "Lazy-Social-Buttons Background Type",
+			    $callback = array( &$this, 'lazysocialbuttons_backgroundtype' ),
+			    $page = 'discussion'
+			);
+			register_setting( $option_group = 'discussion', $option_name = 'lazysocialbuttons_backgroundtype' );
 		}
 		function lazysocialbuttons_position()
 		{
@@ -263,6 +271,18 @@ if (!class_exists("LazySocialButtons_Options")) {
 			      '.$options.'
 			      </select>
 			      Would you like to load jquery from Google\'s CDN? (May conflict with some themes and plugins)
+			      </label>';
+		}
+		function lazysocialbuttons_backgroundtype()
+		{
+			$backgroundtype = get_option('lazysocialbuttons_backgroundtype');
+			$options = '<option value="light"'.($backgroundtype!="dark" ? ' selected="selected"' : '').'>Light</option>';
+			$options .= '<option value="dark"'.($backgroundtype=="dark" ? ' selected="selected"' : '').'>Dark</option>';
+			echo '<label for="lazysocialbuttons_jbackgroundtype">
+			      <select name="lazysocialbuttons_backgroundtype" id="lazysocialbuttons_backgroundtype">
+			      '.$options.'
+			      </select>
+			      Match to the background color of your site for improved display of the spinner (animated gif)
 			      </label>';
 		}
 		function lazysocialbuttons_settings_link($links, $file) {
