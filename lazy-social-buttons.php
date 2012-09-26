@@ -48,7 +48,9 @@ if (!class_exists("LazySocialButtons")) {
 		}
 		function lazysocialbuttons_head()
 		{
-			wp_enqueue_script('jquery');
+			wp_deregister_script('jquery');
+			wp_register_script('jquery', ($_SERVER['HTTPS'] ? 'https:' : 'http:').'//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js', false, false);
+			wp_enqueue_script('jquery', false, false, null); // null is supposed to remove the ver=3.4.2 but it doesn't
 		}
 		function lazysocialbuttons_footer()
 		{
@@ -95,7 +97,7 @@ var lazySocialButtonsImagePath = '".LazySocialButtons_URL."';
 			$postlink = get_permalink($id); //get post link
 			$title = trim($post->post_title); // get post title
 
-			$return_social = '<div class="lazysocialbuttons" data-float="left" data-buttons="'.implode(",", $buttons).'" data-twshareurl="'.$postlink.'" data-twtext="'.htmlspecialchars($title).'" data-shareurl="'.$postlink.'" data-fbhideflyout="'.($facebook_share ? "0" : "1").'"></div>';
+			$return_social = '<div class="lazysocialbuttons" data-float="left" data-buttons="'.implode(",", $buttons).'" data-twshareurl="'.$postlink.'" data-twtext="'.htmlspecialchars($title).'" data-shareurl="'.$postlink.'" data-fbhideflyout="'.($facebook_share ? "false" : "true").'"></div>';
 
 			return $return_social;
 		}
@@ -111,7 +113,7 @@ var lazySocialButtonsImagePath = '".LazySocialButtons_URL."';
 			$facebook = get_option('lazysocialbuttons_facebook');
 			if ( $facebook!="no") $buttons[] = "facebook";
 			$facebook_share = get_option('lazysocialbuttons_facebook_share');
-			if ( $facebook_share!="no") $facebook_share=true; else $facebook_share=true;
+			if ( $facebook_share!="no") $facebook_share=true; else $facebook_share=false;
 
 			switch($position){
 				case 'before':

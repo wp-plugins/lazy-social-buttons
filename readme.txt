@@ -3,7 +3,7 @@ Contributors: Godaddy
 Tags: social, social buttons, lazy social buttons, lazy load, +1, google, facebook, like, share, twitter, tweet
 Requires at least: 3.4
 Tested up to: 3.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: MIT
 License URI: http://opensource.org/licenses/mit-license.php
 
@@ -80,6 +80,10 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 == Changelog ==
+
+= Lazy-Social-Buttons v1.0.2 - 2012-09-26 =
+* Fixed: Facebook share flyout option
+* New: Switched jquery to ajax.googleapis.com v1.8.1 for better performance
 
 = Lazy-Social-Buttons v1.0.1 - 2012-09-24 =
 * New: Added .min.js for better performance.
