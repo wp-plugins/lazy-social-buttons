@@ -3,7 +3,7 @@ Contributors: Godaddy
 Tags: social, social buttons, lazy social buttons, lazy load, +1, google, facebook, like, share, twitter, tweet
 Requires at least: 3.4
 Tested up to: 3.4
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: MIT
 License URI: http://opensource.org/licenses/mit-license.php
 
@@ -29,7 +29,7 @@ display with the spinning wait indicator.
 * onMouseOver activated switch to spinning icon 
 * onMouseOver activated load of heavy social buttons
 * Improves performance by delaying load of Social Buttons until onMouseOver
-* Choose position above or below content
+* Choose position above or below content, or manual
 * Pick from google, twitter and facebook buttons
 * Pick whether to display facebook share or just like
 * Optionally use Google CDN for load of jquery
@@ -47,6 +47,25 @@ display with the spinning wait indicator.
 
 If you have any questions, we'd love to hear from you. Please visit and leave
 your question here http://inside.godaddy.com/onhover-activated-social-buttons/
+
+= How do I place the buttons Manually in my theme where I want them? =
+
+If you want to add buttons to your template, say to make the buttons show up
+in your header, you can simply add the marked up DIV tag where you want it to
+go. For example:
+
+`<div class="lazysocialbuttons" data-float="left"
+data-buttons="google,twitter,facebook"
+data-twshareurl="http://www.yourdomain.tld/" data-twtext="Check out my site"
+data-shareurl="http://www.yourdomain.tld/" data-fbhideflyout="false"
+data-backgroundtype="light"></div>`
+
+Visit https://github.com/godaddy/lazy-social-buttons for a full list of
+the text decoration options.
+
+There is a position option of Manual in the plugin, as of 1.0.5, which will make 
+the social buttons not appear automatically above or below your posts.  You
+don't need to select Manual to place the marked up DIV in your template.
 
 = Is Lazy Social Buttons available outside of WordPress? =
 
@@ -99,6 +118,9 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 == Changelog ==
+
+= Lazy-Social-Buttons v1.0.5 - 2012-10-02 =
+* New: New position choice of manual
 
 = Lazy-Social-Buttons v1.0.4 - 2012-09-26 =
 * New: Background Type choice to match the background of your site for the spinning animated gif

@@ -3,7 +3,7 @@
 Plugin Name: Lazy Social Buttons
 Plugin URI: http://wordpress.org/extend/plugins/lazy-social-buttons/
 Description: Delayed loading of Google +1, Twitter and Facebook social buttons on your posts. Have your cake and eat it too; social buttons and performance.
-Version: 1.0.4
+Version: 1.0.5
 Author: Godaddy.com
 Author URI: http://www.godaddy.com/
 
@@ -203,8 +203,9 @@ if (!class_exists("LazySocialButtons_Options")) {
 		function lazysocialbuttons_position()
 		{
 			$value = get_option('lazysocialbuttons_position');
-			$options = '<option value="before"'.($value != 'after' ? ' selected="selected"' : '').'>Before</option>';
+			$options = '<option value="before"'.(!$value || $value == 'before' ? ' selected="selected"' : '').'>Before</option>';
 			$options .= '<option value="after"'.($value == 'after' ? ' selected="selected"' : '').'>After</option>';
+			$options .= '<option value="manual"'.($value == 'manual' ? ' selected="selected"' : '').'>Manual</option>';
 					
 			echo '<label for="lazysocialbuttons_position">
 			      <select name="lazysocialbuttons_position" id="lazysocialbuttons_position">
