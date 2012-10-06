@@ -3,7 +3,7 @@
 Plugin Name: Lazy Social Buttons
 Plugin URI: http://wordpress.org/extend/plugins/lazy-social-buttons/
 Description: Delayed loading of Google +1, Twitter and Facebook social buttons on your posts. Have your cake and eat it too; social buttons and performance.
-Version: 1.0.5
+Version: 1.0.6
 Author: Godaddy.com
 Author URI: http://www.godaddy.com/
 
@@ -45,6 +45,7 @@ if (!class_exists("LazySocialButtons")) {
 			add_action( 'init', array( &$this, 'lazysocialbuttons_head' ) );	
 			add_action( 'wp_footer', array( &$this, 'lazysocialbuttons_footer' ) );			
 			add_filter( 'the_content', array( &$this, 'lazysocialbuttons_content' ) );
+			add_filter( 'the_excerpt', array( &$this, 'lazysocialbuttons_content' ) );
 		}
 		function lazysocialbuttons_head()
 		{
@@ -147,58 +148,69 @@ if (!class_exists("LazySocialButtons_Options")) {
 		{
 			add_action('admin_init', array( &$this, 'admin_init' ) );
 			add_filter('plugin_action_links', array(&$this, 'lazysocialbuttons_settings_link'), 10, 2);
+			add_action('admin_menu', array( &$this, 'lazysocialbuttons_add_admin_page') );
 		}
 		function admin_init()
 		{
+
+			add_settings_section('lazysocialbuttons_main', 'Main Settings', array(&$this, 'lazysocialbuttons_main_text'), 'lazysocialbuttons');
 			add_settings_field(
 			    $id = 'lazysocialbuttons_position',
 			    $title = "Lazy-Social-Buttons Position",
 			    $callback = array( &$this, 'lazysocialbuttons_position' ),
-			    $page = 'discussion'
+			    $page = 'lazysocialbuttons',
+			    $section = 'lazysocialbuttons_main'
 			);
-			register_setting( $option_group = 'discussion', $option_name = 'lazysocialbuttons_position' );
+			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_position' );
+
 			add_settings_field(
 			    $id = 'lazysocialbuttons_google',
 			    $title = "Lazy-Social-Buttons Google Button",
 			    $callback = array( &$this, 'lazysocialbuttons_google' ),
-			    $page = 'discussion'
+			    $page = 'lazysocialbuttons',
+			    $section = 'lazysocialbuttons_main'
 			);
-			register_setting( $option_group = 'discussion', $option_name = 'lazysocialbuttons_google' );
+			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_google' );
 			add_settings_field(
 			    $id = 'lazysocialbuttons_twitter',
 			    $title = "Lazy-Social-Buttons Twitter Button",
 			    $callback = array( &$this, 'lazysocialbuttons_twitter' ),
-			    $page = 'discussion'
+			    $page = 'lazysocialbuttons',
+			    $section = 'lazysocialbuttons_main'
 			);
-			register_setting( $option_group = 'discussion', $option_name = 'lazysocialbuttons_twitter' );
+			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_twitter' );
 			add_settings_field(
 			    $id = 'lazysocialbuttons_facebook',
 			    $title = "Lazy-Social-Buttons Facebook Button",
 			    $callback = array( &$this, 'lazysocialbuttons_facebook' ),
-			    $page = 'discussion'
+			    $page = 'lazysocialbuttons',
+			    $section = 'lazysocialbuttons_main'
 			);
-			register_setting( $option_group = 'discussion', $option_name = 'lazysocialbuttons_facebook' );
+			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_facebook' );
 			add_settings_field(
 			    $id = 'lazysocialbuttons_facebook_share',
 			    $title = "Lazy-Social-Buttons Facebook Share",
 			    $callback = array( &$this, 'lazysocialbuttons_facebook_share' ),
-			    $page = 'discussion'
+			    $page = 'lazysocialbuttons',
+			    $section = 'lazysocialbuttons_main'
 			);
-			register_setting( $option_group = 'discussion', $option_name = 'lazysocialbuttons_facebook_share' );
+			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_facebook_share' );
 			add_settings_field(
 			    $id = 'lazysocialbuttons_jquerycdn',
 			    $title = "Lazy-Social-Buttons CDN jquery",
 			    $callback = array( &$this, 'lazysocialbuttons_jquerycdn' ),
-			    $page = 'discussion'
+			    $page = 'lazysocialbuttons',
+			    $section = 'lazysocialbuttons_main'
 			);
-			register_setting( $option_group = 'discussion', $option_name = 'lazysocialbuttons_jquerycdn' );
+			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_jquerycdn' );
 			add_settings_field(
 			    $id = 'lazysocialbuttons_backgroundtype',
 			    $title = "Lazy-Social-Buttons Background Type",
 			    $callback = array( &$this, 'lazysocialbuttons_backgroundtype' ),
-			    $page = 'discussion'
+			    $page = 'lazysocialbuttons',
+			    $section = 'lazysocialbuttons_main'
 			);
-			register_setting( $option_group = 'discussion', $option_name = 'lazysocialbuttons_backgroundtype' );
+			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_backgroundtype' );
 		}
 		function lazysocialbuttons_position()
 		{
@@ -291,11 +303,33 @@ if (!class_exists("LazySocialButtons_Options")) {
 			if (!$this_plugin) $this_plugin = plugin_basename(__FILE__);
 
 			if ($file == $this_plugin){
-				$settings_link = '<a href="options-discussion.php#lazysocialbuttons_position">'.__("Settings", "lazysocialbuttons").'</a>';
+				$settings_link = '<a href="options-general.php?page=lazysocialbuttons">'.__("Settings", "lazysocialbuttons").'</a>';
 				array_unshift($links, $settings_link);
 			}
 			return $links;
-		} 
+		}
+		function lazysocialbuttons_add_admin_page() {
+			add_options_page('Lazy Social Buttons Options', 'Lazy Social Buttons', 'manage_options', 'lazysocialbuttons', array( &$this, 'lazysocialbuttons_admin_page'));
+		}	
+		function lazysocialbuttons_main_text() {
+			?>
+			<!-- Could say something here to introduce the main options area -->
+			<?php
+		}
+		function lazysocialbuttons_admin_page() {
+			?>
+			<div class="wrap">
+				<h2>Lazy Social Buttons Options</h2>
+				<form method="post" action="options.php">
+					<?php settings_fields('lazysocialbuttons_group'); ?>
+					<?php do_settings_sections('lazysocialbuttons'); ?>
+					<p class="submit">
+						<input type="submit" class="button-primary" value="<?php _e('Save Changes'); ?>" />
+					</p>
+				</form>
+			</div>
+			<?php
+		}
 	} 
 }
 

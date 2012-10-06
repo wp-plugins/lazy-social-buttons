@@ -3,7 +3,7 @@ Contributors: Godaddy
 Tags: social, social buttons, lazy social buttons, lazy load, +1, google, facebook, like, share, twitter, tweet
 Requires at least: 3.4
 Tested up to: 3.4
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: MIT
 License URI: http://opensource.org/licenses/mit-license.php
 
@@ -41,7 +41,7 @@ display with the spinning wait indicator.
 1. Download the plugin and extract it
 2. Copy the lazy-social-buttons folder to the "/wp-content/plugins/" directory
 3. Activate the plugin through the 'Plugins' menu in WordPress
-4. Customize in Settings->Discussion, scroll to "Lazy-Social-Buttons"  
+4. Customize in Settings->Lazy Social Buttons
 
 == Frequently Asked Questions ==
 
@@ -88,12 +88,12 @@ If it breaks your site, turn it off.
 
 The animated gif was made to display on a white background.  If you are using
 a dark background, change the Lazy Social Buttons Background Type to dark in
-Settings/Discussion.
+Settings/Lazy Social Buttons.
 
 == Screenshots ==
 
 1. Social Buttons transition to real
-2. Settings->Discussion options
+2. Settings->Lazy Social Buttons options
 
 == MIT License ==
 
@@ -118,6 +118,10 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 == Changelog ==
+
+= Lazy-Social-Buttons v1.0.6 - 2012-10-06 =
+* Fixed: Added buttons to the_exerpt so buttons show on category, archive and search results
+* New: Options moved from Discussion to own page
 
 = Lazy-Social-Buttons v1.0.5 - 2012-10-02 =
 * New: New position choice of manual
