@@ -3,7 +3,7 @@
 Plugin Name: Lazy Social Buttons
 Plugin URI: http://wordpress.org/extend/plugins/lazy-social-buttons/
 Description: Delayed loading of Google +1, Twitter and Facebook social buttons on your posts. Have your cake and eat it too; social buttons and performance.
-Version: 1.0.6
+Version: 1.0.7
 Author: Godaddy.com
 Author URI: http://www.godaddy.com/
 
@@ -45,7 +45,9 @@ if (!class_exists("LazySocialButtons")) {
 			add_action( 'init', array( &$this, 'lazysocialbuttons_head' ) );	
 			add_action( 'wp_footer', array( &$this, 'lazysocialbuttons_footer' ) );			
 			add_filter( 'the_content', array( &$this, 'lazysocialbuttons_content' ) );
-			add_filter( 'the_excerpt', array( &$this, 'lazysocialbuttons_content' ) );
+			$excerpt = get_option('lazysocialbuttons_excerpt');
+			if ( $excerpt && $excerpt!='manual' )
+				add_filter( 'the_excerpt', array( &$this, 'lazysocialbuttons_excerpt' ) );
 		}
 		function lazysocialbuttons_head()
 		{
@@ -135,6 +137,30 @@ var lazySocialButtonsImagePath = '".LazySocialButtons_URL."';
 			}
 			return $content;
 		}
+		function lazysocialbuttons_excerpt( $content )
+		{
+			$position = get_option('lazysocialbuttons_excerpt');
+			if (!$position) $position = "manual";
+			$buttons = array();
+			$google = get_option('lazysocialbuttons_google');
+			if ( $google!="no" ) $buttons[] = "google";
+			$twitter = get_option('lazysocialbuttons_twitter');
+			if ( $twitter!="no"  ) $buttons[] = "twitter";
+			$facebook = get_option('lazysocialbuttons_facebook');
+			if ( $facebook!="no") $buttons[] = "facebook";
+			$facebook_share = get_option('lazysocialbuttons_facebook_share');
+			if ( $facebook_share!="no") $facebook_share=true; else $facebook_share=false;
+
+			switch($position){
+				case 'before':
+					$content = $this->lazysocialbuttons_decoration($buttons, $facebook_share) . $content;
+					break;
+				case 'after':
+					$content .= $this->lazysocialbuttons_decoration($buttons, $facebook_share);
+					break;
+			}
+			return $content;
+		}
 	}
 }
 
@@ -154,6 +180,7 @@ if (!class_exists("LazySocialButtons_Options")) {
 		{
 
 			add_settings_section('lazysocialbuttons_main', 'Main Settings', array(&$this, 'lazysocialbuttons_main_text'), 'lazysocialbuttons');
+
 			add_settings_field(
 			    $id = 'lazysocialbuttons_position',
 			    $title = "Lazy-Social-Buttons Position",
@@ -164,6 +191,15 @@ if (!class_exists("LazySocialButtons_Options")) {
 			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_position' );
 
 			add_settings_field(
+			    $id = 'lazysocialbuttons_excerpt',
+			    $title = "Lazy-Social-Buttons Excerpt",
+			    $callback = array( &$this, 'lazysocialbuttons_excerpt' ),
+			    $page = 'lazysocialbuttons',
+			    $section = 'lazysocialbuttons_main'
+			);
+			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_excerpt' );
+
+			add_settings_field(
 			    $id = 'lazysocialbuttons_google',
 			    $title = "Lazy-Social-Buttons Google Button",
 			    $callback = array( &$this, 'lazysocialbuttons_google' ),
@@ -171,6 +207,7 @@ if (!class_exists("LazySocialButtons_Options")) {
 			    $section = 'lazysocialbuttons_main'
 			);
 			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_google' );
+
 			add_settings_field(
 			    $id = 'lazysocialbuttons_twitter',
 			    $title = "Lazy-Social-Buttons Twitter Button",
@@ -179,6 +216,7 @@ if (!class_exists("LazySocialButtons_Options")) {
 			    $section = 'lazysocialbuttons_main'
 			);
 			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_twitter' );
+
 			add_settings_field(
 			    $id = 'lazysocialbuttons_facebook',
 			    $title = "Lazy-Social-Buttons Facebook Button",
@@ -187,6 +225,7 @@ if (!class_exists("LazySocialButtons_Options")) {
 			    $section = 'lazysocialbuttons_main'
 			);
 			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_facebook' );
+
 			add_settings_field(
 			    $id = 'lazysocialbuttons_facebook_share',
 			    $title = "Lazy-Social-Buttons Facebook Share",
@@ -195,6 +234,7 @@ if (!class_exists("LazySocialButtons_Options")) {
 			    $section = 'lazysocialbuttons_main'
 			);
 			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_facebook_share' );
+
 			add_settings_field(
 			    $id = 'lazysocialbuttons_jquerycdn',
 			    $title = "Lazy-Social-Buttons CDN jquery",
@@ -203,6 +243,7 @@ if (!class_exists("LazySocialButtons_Options")) {
 			    $section = 'lazysocialbuttons_main'
 			);
 			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_jquerycdn' );
+
 			add_settings_field(
 			    $id = 'lazysocialbuttons_backgroundtype',
 			    $title = "Lazy-Social-Buttons Background Type",
@@ -211,6 +252,7 @@ if (!class_exists("LazySocialButtons_Options")) {
 			    $section = 'lazysocialbuttons_main'
 			);
 			register_setting( $option_group = 'lazysocialbuttons_group', $option_name = 'lazysocialbuttons_backgroundtype' );
+
 		}
 		function lazysocialbuttons_position()
 		{
@@ -224,6 +266,20 @@ if (!class_exists("LazySocialButtons_Options")) {
 			      '.$options.'
 			      </select>
 			      Select the position for the social buttons to appear in relations to the content.
+			      </label>';
+		}
+		function lazysocialbuttons_excerpt()
+		{
+			$value = get_option('lazysocialbuttons_excerpt');
+			$options = '<option value="manual"'.(!$value || $value == 'manual' ? ' selected="selected"' : '').'>Manual</option>';
+			$options .= '<option value="before"'.($value == 'before' ? ' selected="selected"' : '').'>Before</option>';
+			$options .= '<option value="after"'.($value == 'after' ? ' selected="selected"' : '').'>After</option>';
+					
+			echo '<label for="lazysocialbuttons_excerpt">
+			      <select name="lazysocialbuttons_excerpt" id="lazysocialbuttons_excerpt">
+			      '.$options.'
+			      </select>
+			      Select the position for the social buttons to appear in relations to the excerpt.
 			      </label>';
 		}
 		function lazysocialbuttons_google()

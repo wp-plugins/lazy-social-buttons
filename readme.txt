@@ -3,7 +3,7 @@ Contributors: Godaddy
 Tags: social, social buttons, lazy social buttons, lazy load, +1, google, facebook, like, share, twitter, tweet
 Requires at least: 3.4
 Tested up to: 3.4
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: MIT
 License URI: http://opensource.org/licenses/mit-license.php
 
@@ -47,6 +47,18 @@ display with the spinning wait indicator.
 
 If you have any questions, we'd love to hear from you. Please visit and leave
 your question here http://inside.godaddy.com/onhover-activated-social-buttons/
+
+= How do I make lazy social buttons appear in the excerpt? =
+
+To turn on lazy social buttons in the excerpt, navigate to Settings-&gt;Lazy
+Social Buttons and toggle the "Excerpt" option from Manual to Above or Below.
+
+The Excerpt option is defaulted to Manual because it reportedly causes problems with
+certain CPTs.  It was suggested that "Perhaps it would be useful for option to
+be added to select which CPTs will display the buttons and/or whether excerpts
+(or excerpts within widgets) will display the buttons."  This is a good
+suggestion, and will be considered for future release.  Release 1.0.7 is a hot
+fix to remedy the eminent problem by making the_excerpt an option.
 
 = How do I place the buttons Manually in my theme where I want them? =
 
@@ -118,6 +130,10 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 == Changelog ==
+
+= Lazy-Social-Buttons v1.0.7 - 2012-10-08 =
+* Fixed: Changed the_excerpt to an option b/c reported it breaks certain configurations
+* New: the_excerpt option
 
 = Lazy-Social-Buttons v1.0.6 - 2012-10-06 =
 * Fixed: Added buttons to the_exerpt so buttons show on category, archive and search results
